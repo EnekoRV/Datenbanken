@@ -6,7 +6,12 @@ public class Datenbank extends Main {
         
     
 }
+    public void Preise(){
+        
+    }
+
 }
+
 
 
 
