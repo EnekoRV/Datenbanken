@@ -8,7 +8,7 @@ public class Datenbank extends Main {
         System.out.println("Wie viele ermäßigte Tickets möchten Sie kaufen?");
             int K = s.nextInt();
         int Kinder = K;
-        System.out.println(K);
+        System.out.println("Sie haben "+ K + " ermäßigte Tickets gekauft")
         //int Erwachsene = E;
         //int Bereiche = B;
         
@@ -22,6 +22,7 @@ public class Datenbank extends Main {
     }
 
 }
+
 
 
 
