@@ -9,8 +9,11 @@ public class Datenbank extends Main {
     public void Preise(){
         
     }
+    public void Bereiche(){
+        System.out.println
 
 }
+
 
 
 
