@@ -7,14 +7,16 @@ public class Datenbank extends Main {
         System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermäßigte 10€ und für Erwachsene 15€");
         System.out.println("Wie viele ermäßigte Tickets möchten Sie kaufen?");
             int K = s.nextInt();
-        int Kinder = K;
+        public int Kinder = K;
         System.out.println("Sie haben "+ K +" ermäßigte Tickets gekauft")
         System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
             int E = s.nextInt();
-        int Erwachsene = E;
+        public int Erwachsene = E;
         System.out.println("Sie haben "+ E +" ermäßigte Tickets gekauft")
-        //int Bereiche = B;
-        
+        System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
+            int E = s.nextInt();
+        public int Bereiche = B;
+        System.out.println("Sie haben eintritt auf"+ B );
     
 }
     public void Preise(){
@@ -25,6 +27,7 @@ public class Datenbank extends Main {
     }
 
 }
+
 
 
 
