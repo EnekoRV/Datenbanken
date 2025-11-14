@@ -30,7 +30,7 @@ public class Datenbank extends Main {
         
     }
     public void Barcode (){
-        System.out.println("ZOO-"+AnzahlKinder, AnzahlErwachsene, AnzahlBereiche)
+        System.out.print("ZOO-"+AnzahlKinder+AnzahlErwachsene+AnzahlBereiche+"-");
     }
 }
 
