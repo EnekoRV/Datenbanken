@@ -8,11 +8,11 @@ public class Datenbank extends Main {
         System.out.println("Wie viele ermäßigte Tickets möchten Sie kaufen?");
             int K = s.nextInt();
         public int AnzahlKinder = AK;
-        System.out.println("Sie haben "+ AK +" ermäßigte Tickets gekauft")
+        System.out.println("Sie haben "+ AK +" ermäßigte Tickets gekauft");
         System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
             int E = s.nextInt();
         public int AnzahlErwachsene = AE;
-        System.out.println("Sie haben "+ AE +" ermäßigte Tickets gekauft")
+        System.out.println("Sie haben "+ AE +" ermäßigte Tickets gekauft");
         System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
             int E = s.nextInt();
         public int AnzahlBereiche = AB;
@@ -24,7 +24,7 @@ public class Datenbank extends Main {
         public int Kinder = 10;
         public int Erwachsene =15;
         Gesamt = (AnzahlKinder * Kinder + AnzahlErwachsene * Erwachsene) * AnzahlBereiche;
-        System.out.println("Der Preis beträgt"+ Gesamt)
+        System.out.println("Der Preis beträgt"+ Gesamt);
             
         
     }
@@ -33,6 +33,7 @@ public class Datenbank extends Main {
     }
 
 }
+
 
 
 
