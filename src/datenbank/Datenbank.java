@@ -8,6 +8,7 @@ public class Datenbank extends Main {
     public int Gesamt;
     public int Kinder = 10;
     public int Erwachsene =15;
+    public String
     
     public void Age(){
         
@@ -21,6 +22,17 @@ public class Datenbank extends Main {
         System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
             AnzahlBereiche = s.nextInt();        
         System.out.println("Sie haben eintritt auf"+ AnzahlBereiche );
+        System.out.println("Wollen sie Zusätzliche Angebote kaufen?");
+            String Zusatz = s.nextLine();
+        System.out.print("JA/NEIN" + Zusatz);
+        for (;;)
+            If Zusatz == "JA"{
+                System.out.println("1. Delfin-Show (20€ p.P.) 2. Raubtier (10€ p.P.)")
+                    s.nextInt();
+                    If 
+                    
+        
+        }
     
 }
     public void Preise(){      
@@ -32,6 +44,8 @@ public class Datenbank extends Main {
     public void Barcode (){
         System.out.print("ZOO-"+AnzahlKinder+AnzahlErwachsene+AnzahlBereiche+"-");
     }
+    
 }
+
 
 
