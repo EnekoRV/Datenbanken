@@ -6,7 +6,6 @@ public class Main {
         System.out.println("Herzlich Willkommen zu Ihrem Abenteuer im ZooTopia");
         Datenbank d = new Datenbank();
         d.Age();
+        d.Preise();
     }
 }
-
-
