@@ -28,16 +28,17 @@ public class Datenbank extends Main {
      for (;;) { 
         System.out.println("Zusatz? (JA/NEIN)");
         String zusatz = s.nextLine();
-
+        
         if (zusatz.equalsIgnoreCase("JA")) {
             System.out.println("1. Delfin-Show (20€ p.P.)");
             System.out.println("2. Raubtier-Show (10€ p.P.)");
-        
-            int eingabe = s.nextInt();
-            s.nextLine(); 
-            if (eingabe == 1) {
-                
-                
+            System.out.print("Wie viele Tickets wollen Sie für die Delfin-Show kaufen?" + AnzahlDS);
+            int AnzahlDS = s.nextInt();
+            System.out.print("Wie viele Tickets wollen Sie für die Raubtier-Show kaufen?" + AnzahlRS);
+            int AnzahlRS = s.nextInt();
+
+            System.out.println(ZA);
+            int ZA = AnzahlDS * 20 + AnzahlRS * 10;    
             }
             
         
@@ -57,6 +58,7 @@ public class Datenbank extends Main {
     }
     
 }
+
 
 
 
