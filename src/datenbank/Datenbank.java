@@ -38,7 +38,20 @@ public class Datenbank extends Main {
 
             int ZA = AnzahlDS * 20 + AnzahlRS * 10; 
             System.out.println(ZA);
-            }
+            System.out.println("Wollen sie noch mehr Zusatzangebote kaufen?");
+                String mehr = s.nextLine();
+                if (mehr.equalsIgnoreCase("JA"){
+                }
+                else{
+                break;
+                }
+                    
+
+                    
+            } 
+         
+            
+         
             
         
                     
@@ -57,6 +70,7 @@ public class Datenbank extends Main {
     }
     
 }
+
 
 
 
