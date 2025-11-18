@@ -58,8 +58,11 @@ public class Datenbank extends Main {
     }
 
     public void Barcode() {
-        System.out.print("ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-");
+        System.out.println("Ihr Barcode ist: " + "ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-"); 
+        System.out.printl("Bitte zeigen sie diesen beim Eingang vor.")
+
     }
 }
+
 
 
