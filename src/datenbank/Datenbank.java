@@ -14,9 +14,9 @@ public class Datenbank extends Main {
     public int ZA;
 
     public void Age() {
-        System.out.println("Herzlich Willkommen im ZooTopia")
-        System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermaeßigte 10,- und für Erwachsene 15,-");
-        System.out.println("Wie viele ermaeßigte Tickets möchten Sie kaufen?");
+        System.out.println("Herzlich Willkommen im ZooTopia");
+        System.out.println("Pro Bereich kostet eine Eintrittskarte fuer kinder/Ermaeßigte 10,- und für Erwachsene 15,-");
+        System.out.println("Wie viele ermaeßigte Tickets moechten Sie kaufen?");
         AnzahlKinder = s.nextInt();
         System.out.println("Sie haben " + AnzahlKinder + " ermaeßigte Tickets gekauft");
         System.out.println("Wie viele Erwachsenen Tickets moechten sie kaufen?");
@@ -48,6 +48,9 @@ public class Datenbank extends Main {
                     break;
                 }
             }
+            else{
+                break;
+            }
         }
     }
 
@@ -58,8 +61,8 @@ public class Datenbank extends Main {
     }
 
     public void Barcode() {
-        System.out.println("Ihr Barcode ist: " + "ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-"); 
-        System.out.printl("Bitte zeigen sie diesen beim Eingang vor.")
+        System.out.print("Ihr Barcode ist: " + "ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-"); 
+        
 
     }
 }
