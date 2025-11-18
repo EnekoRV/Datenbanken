@@ -25,11 +25,22 @@ public class Datenbank extends Main {
         System.out.println("Wollen sie Zusätzliche Angebote kaufen?");
             String Zusatz = s.nextLine();
         System.out.print("JA/NEIN" + Zusatz);
-        for (;;)
-            If Zusatz == "JA"{
-                System.out.println("1. Delfin-Show (20€ p.P.) 2. Raubtier (10€ p.P.)")
-                    s.nextInt();
-                    If 
+     for (;;) { 
+        System.out.println("Zusatz? (JA/NEIN)");
+        String zusatz = s.nextLine();
+
+        if (zusatz.equalsIgnoreCase("JA")) {
+            System.out.println("1. Delfin-Show (20€ p.P.)");
+            System.out.println("2. Raubtier-Show (10€ p.P.)");
+        
+            int eingabe = s.nextInt();
+            s.nextLine(); 
+            if (eingabe == 1) {
+                
+                
+            }
+            
+        
                     
         
         }
@@ -46,6 +57,7 @@ public class Datenbank extends Main {
     }
     
 }
+
 
 
 
