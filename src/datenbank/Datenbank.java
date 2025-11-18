@@ -15,7 +15,7 @@ public class Datenbank extends Main {
 
     public void Age() {
 
-        System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermäßigte 10€ und für Erwachsene 15€");
+        System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermäßigte 10,- und für Erwachsene 15,-");
         System.out.println("Wie viele ermäßigte Tickets möchten Sie kaufen?");
         AnzahlKinder = s.nextInt();
         System.out.println("Sie haben " + AnzahlKinder + " ermäßigte Tickets gekauft");
@@ -33,15 +33,14 @@ public class Datenbank extends Main {
             String zusatz = s.nextLine();
 
             if (zusatz.equalsIgnoreCase("JA")) {
-                System.out.println("1. Delfin-Show (20€ p.P.)");
-                System.out.println("2. Raubtier-Show (10€ p.P.)");
-                System.out.print("Wie viele Tickets wollen Sie für die Delfin-Show kaufen?");
+                System.out.println("1. Delfin-Show (20,- p.P.)");
+                System.out.println("2. Raubtier-Show (10,- p.P.)");
+                System.out.println("Wie viele Tickets wollen Sie für die Delfin-Show kaufen?");
                 int AnzahlDS = s.nextInt();
-                System.out.print("Wie viele Tickets wollen Sie für die Raubtier-Show kaufen?");
+                System.out.println("Wie viele Tickets wollen Sie für die Raubtier-Show kaufen?");
                 int AnzahlRS = s.nextInt();
 
                 ZA = AnzahlDS * 20 + AnzahlRS * 10;
-                System.out.println(ZA);
                 System.out.println("Wollen sie noch mehr Zusatzangebote kaufen?");
                 String mehr = s.nextLine();
                 if (mehr.equalsIgnoreCase("JA")) {
@@ -54,7 +53,7 @@ public class Datenbank extends Main {
 
     public void Preise() {
         Gesamt = (AnzahlKinder * Kinder + AnzahlErwachsene * Erwachsene) * AnzahlBereiche + ZA;
-        System.out.println("Der Preis beträgt " + Gesamt);
+        System.out.println("Der Preis beträgt " + Gesamt + " Euro");
 
     }
 
@@ -62,3 +61,4 @@ public class Datenbank extends Main {
         System.out.print("ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-");
     }
 }
+
