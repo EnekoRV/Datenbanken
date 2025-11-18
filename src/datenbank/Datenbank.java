@@ -14,18 +14,18 @@ public class Datenbank extends Main {
     public int ZA;
 
     public void Age() {
-
-        System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermäßigte 10,- und für Erwachsene 15,-");
-        System.out.println("Wie viele ermäßigte Tickets möchten Sie kaufen?");
+        System.out.println("Herzlich Willkommen im ZooTopia")
+        System.out.println("Pro Bereich kostet eine Eintrittskarte für kinder/Ermaeßigte 10,- und für Erwachsene 15,-");
+        System.out.println("Wie viele ermaeßigte Tickets möchten Sie kaufen?");
         AnzahlKinder = s.nextInt();
-        System.out.println("Sie haben " + AnzahlKinder + " ermäßigte Tickets gekauft");
-        System.out.println("Wie viele Erwachsenen Tickets möchten sie kaufen?");
+        System.out.println("Sie haben " + AnzahlKinder + " ermaeßigte Tickets gekauft");
+        System.out.println("Wie viele Erwachsenen Tickets moechten sie kaufen?");
         AnzahlErwachsene = s.nextInt();
         System.out.println("Sie haben " + AnzahlErwachsene + " erwachsene Tickets gekauft");
-        System.out.println("Wie viele Bereiche möchten Sie besuchen?");
+        System.out.println("Wie viele Bereiche moechten Sie besuchen?");
         AnzahlBereiche = s.nextInt();
         System.out.println("Sie haben eintritt auf" + AnzahlBereiche);
-        System.out.println("Wollen sie Zusätzliche Angebote kaufen?");
+        System.out.println("Wollen sie Zusaetzliche Angebote kaufen?");
         String Zusatz = s.nextLine();
         System.out.print("JA/NEIN" + Zusatz);
         for (;;) {
@@ -53,7 +53,7 @@ public class Datenbank extends Main {
 
     public void Preise() {
         Gesamt = (AnzahlKinder * Kinder + AnzahlErwachsene * Erwachsene) * AnzahlBereiche + ZA;
-        System.out.println("Der Preis beträgt " + Gesamt + " Euro");
+        System.out.println("Der Preis betraegt " + Gesamt + " Euro");
 
     }
 
@@ -61,4 +61,5 @@ public class Datenbank extends Main {
         System.out.print("ZOO-" + AnzahlKinder + AnzahlErwachsene + AnzahlBereiche + "-");
     }
 }
+
 
