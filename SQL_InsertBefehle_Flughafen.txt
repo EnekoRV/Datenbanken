@@ -20,6 +20,19 @@ insert into verbindungen (verbindungid, flugdauer, distanz, startbahn_f, landeba
 (19, '40min', '340km', 7, 3, 10)
 (20, '40min', '340km', 6, 2, 20)
 (21, '40min', '340km', 7, 1, 15)
+(22, '1h 0min', '295km', 10, 8, ?),
+(23, '1h 0min', '295km', 11, 9, ?),
+(24, '1h 5min', '295km', 8, 10, ?),
+(25, '1h 5min', '295km', 9, 11, ?),
+(26, '1h 10min', '330km', 10, 4, ?),
+(27, '1h 10min', '330km', 11, 5, ?),
+(28, '1h 5min', '330km', 4, 10, ?),
+(29, '1h 5min', '330km', 5, 11, ?),
+(30, '1h 15min', '393km', 8, 9, ?),
+(31, '1h 15min', '393km', 9, 4, ?),
+(32, '1h 20min', '393km', 9, 8, ?),
+(33, '1h 20min', '393km', 4, 9, ?);
+ 
 
 
 insert into Startbahn(startbahnid, bezeichnung, standort_f) values
@@ -30,6 +43,10 @@ insert into Startbahn(startbahnid, bezeichnung, standort_f) values
 (5, '06L 24R Südbahn', 1)
 (6, '08L 26R Ostbahn', 3)
 (7, '08R 26L Westbahn', 3)
+(8, '05R 23L Querbahn', 5)
+(9, '15L 33R Hauptbahn', 5)
+(10, '08L 26R Ostbahn', 4)
+(11, '08R 26L Westbahn', 4)
 
 
 insert into landebahn(landebahnid, bezeichnung, standort_f) values
@@ -40,9 +57,94 @@ insert into landebahn(landebahnid, bezeichnung, standort_f) values
 (5, '06L 24R Südbahn', 1)
 (6, '08L 26R Ostbahn', 3)
 (7, '08R 26L Westbahn', 3)
+(8, '05R 23L Querbahn', 5)
+(9, '15L 33R Hauptbahn', 5)
+(10, '08L 26R Ostbahn', 4)
+(11, '08R 26L Westbahn', 4)
 
 
 Insert into standort(standortid, ortsname) values
 (1, 'Berlin')
 (2, 'Frankfurt')
 (3, 'Muenchen')
+
+
+
+INSERT INTO Personal (PersonalID, Arbeitsbereich_F, Name, Nachname, Standort_F)
+VALUSE  (1, 1, 'Eneko', 'Reichert', 1)
+	(2, 3, 'Lennard', 'Pramhas', 1)
+	(3, 2, 'Laura', 'Richter', 1)
+	(4, 7, 'Lenny', 'Zeisler', 1),
+   	(5, 9, 'Darian', 'Thiele', 1),
+	(6, 5, 'Janik', 'Sonne', 1),
+    	(7, 4, 'Luca', 'Bauer', 1),
+  	(8, 10, 'Jonas', 'Nagelmann', 1),
+    	(9, 6, 'Lara', 'Schulz', 1),
+    	(10, 2, 'Alexander', 'Müller', 1),
+    	(11, 4, 'Marie', 'Schmidt', 1),
+    	(12, 5, 'Lukas', 'Schneider', 1),
+    	(13, 5, 'Anna', 'Fischer', 1),
+    	(14, 8, 'Jonas', 'Weber', 1),
+    	(15, 8, 'Nico', 'Schulze', 1),
+    	(16, 1, 'Maddox', 'Golzsch', 2),
+    	(17, 5, 'Paul', 'Ross', 2),
+    	(18, 6, 'Richard', 'Poenitsch', 2),
+    	(19, 2, 'Paula', 'Seidler', 2),
+    	(20, 3, 'Franzi', 'Thriemer', 2),
+    	(21, 9, 'Moritz', 'Engler', 2),
+    	(22, 4, 'Tim', 'Geisler', 2),
+    	(23, 10, 'Timo', 'Hartl', 2),
+    	(24, 7, 'Jan', 'Buschmann', 2),
+    	(25, 2, 'Laura', 'Meyer', 2),
+    	(26, 4, 'Felix', 'Wagner', 2),
+    	(27, 5, 'Sophie', 'Becker', 2),
+    	(28, 5, 'Leon', 'Hoffmann', 2),
+    	(29, 8, 'Emilia', 'Schulz', 2),
+    	(30, 8, 'Peter', 'Fox', 2),
+    	(31, 7, 'Horst', 'Lichter', 3),
+    	(32, 1, 'Markus', 'Ruehl', 3),
+    	(33, 10, 'Larissa', 'Stein', 3),
+    	(34, 9, 'Marianne', 'Schlabs', 3),
+    	(35, 5, 'Rudi', 'Schmidt', 3),
+    	(36, 2, 'Nelly', 'Seifert', 3),
+   	(37, 3, 'Fritz', 'Reichelt', 3),
+    	(38, 8, 'Katrin', 'Sildermann', 3),
+    	(39, 6, 'Nadiene', 'Reinke', 3),
+    	(40, 2, 'Noah', 'Braun', 3),
+    	(41, 4, 'Lina', 'Zimmermann', 3),
+    	(42, 5, 'Maximilian', 'Schäfer', 3),
+    	(43, 5, 'Clara', 'Koch', 3),
+    	(44, 8, 'Paul', 'Richter', 3),
+    	(45, 4, 'Robert', 'Zigel', 3),
+    	(46, 9, 'Marlon', 'Kessler', 4),
+    	(47, 2, 'Vanessa', 'Vogt', 4),
+    	(48, 8, 'Tobias', 'Hertel', 4),
+    	(49, 1, 'Sina', 'Lehmann', 4),
+    	(50, 4, 'Cedric', 'Moeller', 4),
+    	(51, 5, 'Vanessa', 'Rickert', 4),
+    	(52, 3, 'Dominik', 'Heindrich', 4),
+    	(53, 7, 'Amira', 'Boettcher', 4),
+    	(54, 6, 'Leonard', 'Steinberger', 4),
+    	(55, 2, 'Mia', 'Klein', 4),
+    	(56, 4, 'Finn', 'Wolf', 4),
+    	(57, 5, 'Hannah', 'Schröder', 4),
+    	(58, 5, 'Ben', 'Neumann', 4),
+    	(59, 8, 'Lea', 'Schwarz', 4),
+    	(60, 10, 'Yasmin', 'Fritsche', 4),
+    	(61, 5, 'Jannis', 'Walther', 5),
+    	(62, 6, 'Mira', 'Kaltenborn', 5),
+    	(63, 4, 'Korbinian', 'Reuter', 5),
+    	(64, 1, 'Elena', 'Hahne', 5),
+    	(65, 3, 'Silas', 'Brandner', 5),
+    	(66, 2, 'Melanie', 'Schaber', 5),
+    	(67, 7, 'Niklas', 'Roeder', 5),
+    	(68, 9, 'Lilli', 'Kaufmann', 5),
+    	(69, 10, 'Florian', 'Keilholz', 5),
+    	(70, 8, 'Sophie', 'Dornfelder', 5),
+    	(71, 2, 'Julian', 'Zimmer', 5),
+    	(72, 4, 'Emma', 'Hartmann', 5),
+    	(73, 5, 'Elias', 'Lange', 5),
+    	(74, 5, 'Sarah', 'Schmitt', 5),
+    	(75, 8, 'David', 'Werner', 5);
+
+
