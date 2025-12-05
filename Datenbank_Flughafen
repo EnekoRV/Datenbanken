@@ -1,0 +1,140 @@
+package datenbank_flughafen;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Datenbank_Flughafen {
+
+    Connection connection = null;
+    String url = "jdbc:sqlite:P:/ifsy/UNTERLAGEN/SQLite/localdb/flughafen.db";
+
+    public void connectToDB() {
+        String url = "jdbc:sqlite:P:/ifsy/UNTERLAGEN/SQLite/localdb/flughafen.db";
+        Connection connection = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(url);
+            System.out.println("Verbindung zur Datenbank erfolgreich hergestellt!");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC-Treiber nicht gefunden.");
+            e.printStackTrace();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+    }
+
+    public void Airlines() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int AirlineID = 0;
+        int AnzahlFlugzeuge = 0;
+        String Name = null;
+        int Flugzeuge_F = 0;
+        try {
+            System.out.println("Aktuelle Nutzer der Datenbank:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Airlines"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                AirlineID = result.getInt("AirlineID"); //Benennung aus der Datenbank "userid"
+                AnzahlFlugzeuge = result.getInt("AnzahlFlugzeuge");
+                Name = result.getString("Name");
+                Flugzeuge_F = result.getInt("Flugzeuge_F");//muss für alle Spalten der Tabelle durchgeführt werden
+                //Ausgabe
+                System.out.println(AirlineID + " " + Name + " " + Flugzeuge_F);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: AirlineID: " + AirlineID + ", Name: " + Name
+                    + ", AnzahlFlugzeuge:" + AnzahlFlugzeuge + "Flguzeuge_F: " + Flugzeuge_F);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addAirline(String Name, int AnzahlFlugzeuge, int Flugzeuge_F) {
+        String sql = "INSERT INTO Airlines(Name, AnzahlFlugzeuge, Flugzeuge_F) VALUES(?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Name);
+            pstmt.setInt(2, AnzahlFlugzeuge);
+            pstmt.setInt(3, Flugzeuge_F);
+            pstmt.executeUpdate();
+
+            System.out.println("Airline erfolgreich hinzugefügt: " + Name);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen der Airline: " + e.getMessage());
+        }
+    }
+
+    public void deleteAirlineByID(int id) {
+        String sql = "DELETE FROM Airlines WHERE AirlineID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Airline mit ID " + id + " wurde gelöscht.");
+            } else {
+                System.out.println("Keine Airline mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Löschen: " + e.getMessage());
+        }
+    }
+    public void updateAirlineByID(int id, String name, String anzahlFlugzeuge, int flugzeugeF) {
+    String sql = "UPDATE Airlines SET Name = ?, AnzahlFlugzeuge = ?, Flugzeuge_F = ? WHERE AirlineID = ?";
+
+    try (Connection conn = DriverManager.getConnection(url);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, name);
+        pstmt.setString(2, anzahlFlugzeuge);
+        pstmt.setInt(3, flugzeugeF);
+        pstmt.setInt(4, id);
+
+        int rows = pstmt.executeUpdate();
+
+        if (rows > 0) {
+            System.out.println("Airline mit ID " + id + " wurde erfolgreich aktualisiert.");
+        } else {
+            System.out.println("Keine Airline mit ID " + id + " gefunden.");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+    }
+}
+}
