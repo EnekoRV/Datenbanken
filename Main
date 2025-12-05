@@ -1,0 +1,125 @@
+package datenbank_flughafen;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Datenbank_Flughafen DBF = new Datenbank_Flughafen();
+        Scanner s = new Scanner(System.in);
+        DBF.connectToDB();
+        while (true) {
+            System.out.println("Schreiben Sie eine Zahl (1-10) Tippen Sie die 1 wenn sie sehen moechten welche Moeglichkeiten es gibt.");
+            int select = s.nextInt();
+
+            switch (select) {
+                case 1:
+                    System.out.println(" 1 = Uebersicht \n 2 = Verbinden der Datenbank \n 3 = Airlines");
+                    break;
+                case 2:
+                    DBF.connectToDB();
+                    break;
+                case 3:
+                    DBF.Airlines();
+                    s.nextLine(); // Scanner-Puffer leeren nach nextInt oben im Menü
+
+                    // ------------------ Airline hinzufügen ------------------
+                    String YesNo = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Airline hinzufügen? (Y/N)");
+                        YesNo = s.nextLine();
+
+                        if (YesNo.equalsIgnoreCase("Y") || YesNo.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungültige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie den Namen der Airline an: ");
+                        String Name = s.nextLine();
+
+                        int AnzahlFlugzeuge;
+
+                        while (true) {
+                            System.out.print("Geben sie ein wie viele Flugzeuge die Airline haben soll: ");
+
+                            if (s.hasNextInt()) {
+                                AnzahlFlugzeuge = s.nextInt();
+                                s.nextLine(); // Puffer leeren
+                                break;
+                            } else {
+                                System.out.println("Ungültige Eingabe! Bitte eine ganze Zahl eingeben.");
+                                s.nextLine(); // ungültige Eingabe löschen
+                            }
+                        }
+
+                        System.out.print("Geben Sie ein welche Art von Flugzeug es haben soll(1-11): ");
+                        int Flugzeuge_F = s.nextInt();
+                        s.nextLine();
+
+                        DBF.addAirline(Name, AnzahlFlugzeuge, Flugzeuge_F);
+                    }
+
+                    // ------------------ Airline löschen ------------------
+                    String YesNo2 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Airline löschen? (Y/N)");
+                        YesNo2 = s.nextLine();
+
+                        if (YesNo2.equalsIgnoreCase("Y") || YesNo2.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungültige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo2.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz möchten Sie löschen: ");
+                        int Airlinedelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteAirlineByID(Airlinedelete);
+                    }
+
+                    // ------------------ Airline bearbeiten ------------------
+                    String YesNo3 = "";
+                    for (;;) {
+                        System.out.print("Wollen sie eine Airline bearbeiten? (Y/N) ");
+                        YesNo3 = s.nextLine();
+
+                        if (YesNo3.equalsIgnoreCase("Y") || YesNo3.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungültige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo3.equalsIgnoreCase("Y")) {
+                        System.out.print("Welche Airline-ID möchten Sie bearbeiten: ");
+                        int editID = s.nextInt();
+                        s.nextLine();
+
+                        System.out.print("Neuer Name: ");
+                        String newName = s.nextLine();
+
+                        System.out.print("Neue Anzahl Flugzeuge: ");
+                        String newAnzahl = s.nextLine();
+
+                        System.out.print("Neue Flugzeug-Art (1-11): ");
+                        int newFlugzeugeF = s.nextInt();
+                        s.nextLine();
+
+                        DBF.updateAirlineByID(editID, newName, newAnzahl, newFlugzeugeF);
+                    }
+
+                    break;
+
+                default:
+                    System.out.println("Ungültige Ausgabe");
+            }
+        }
+    }
+}
