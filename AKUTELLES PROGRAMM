@@ -1,0 +1,499 @@
+package datenbank_flughafen;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Datenbank_Flughafen {
+
+    Connection connection = null;
+    String url = "jdbc:sqlite:P:/ifsy/UNTERLAGEN/SQLite/localdb/flughafen.db";
+
+    public void connectToDB() {
+        String url = "jdbc:sqlite:P:/ifsy/UNTERLAGEN/SQLite/localdb/flughafen.db";
+        Connection connection = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection(url);
+            System.out.println("Verbindung zur Datenbank erfolgreich hergestellt!");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC-Treiber nicht gefunden.");
+            e.printStackTrace();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+    }
+
+    public void Airlines() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int AirlineID = 0;
+        int AnzahlFlugzeuge = 0;
+        String Name = null;
+        int Flugzeuge_F = 0;
+        try {
+            System.out.println("Aktuelle Nutzer der Datenbank:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Airlines"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                AirlineID = result.getInt("AirlineID"); //Benennung aus der Datenbank "userid"
+                AnzahlFlugzeuge = result.getInt("AnzahlFlugzeuge");
+                Name = result.getString("Name");
+                Flugzeuge_F = result.getInt("Flugzeuge_F");//muss für alle Spalten der Tabelle durchgeführt werden
+                //Ausgabe
+                System.out.println(AirlineID + " " + Name + " " + Flugzeuge_F);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: AirlineID: " + AirlineID + ", Name: " + Name
+                    + ", AnzahlFlugzeuge:" + AnzahlFlugzeuge + "Flguzeuge_F: " + Flugzeuge_F);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addAirline(String Name, int AnzahlFlugzeuge, int Flugzeuge_F) {
+        String sql = "INSERT INTO Airlines(Name, AnzahlFlugzeuge, Flugzeuge_F) VALUES(?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Name);
+            pstmt.setInt(2, AnzahlFlugzeuge);
+            pstmt.setInt(3, Flugzeuge_F);
+            pstmt.executeUpdate();
+
+            System.out.println("Airline erfolgreich hinzugefügt: " + Name);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen der Airline: " + e.getMessage());
+        }
+    }
+
+    public void deleteAirlineByID(int id) {
+        String sql = "DELETE FROM Airlines WHERE AirlineID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Airline mit ID " + id + " wurde geloescht.");
+            } else {
+                System.out.println("Keine Airline mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Loeschen: " + e.getMessage());
+        }
+    }
+
+    public void updateAirlineByID(int id, String name, String anzahlFlugzeuge, int flugzeugeF) {
+        String sql = "UPDATE Airlines SET Name = ?, AnzahlFlugzeuge = ?, Flugzeuge_F = ? WHERE AirlineID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, anzahlFlugzeuge);
+            pstmt.setInt(3, flugzeugeF);
+            pstmt.setInt(4, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Airline mit ID " + id + " wurde erfolgreich aktualisiert.");
+            } else {
+                System.out.println("Keine Airline mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+        }
+    }
+
+    public void Arbeitsbereich() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int ArbeitsbereichID = 0;
+        String Bezeichnung = null;
+        try {
+            System.out.println("Die verschiedenen Arbeitsbereiche:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Arbeitsbereich"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                ArbeitsbereichID = result.getInt("ArbeitsbereichID"); //Benennung aus der Datenbank "userid
+                Bezeichnung = result.getString("Bezeichnung");
+                System.out.println(ArbeitsbereichID + " " + Bezeichnung);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: AirlineID: " + ArbeitsbereichID + ", Name: " + Bezeichnung);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addArbeitsbereich(String Bezeichnung) {
+        String sql = "INSERT INTO Arbeitsbereich(Bezeichnung) VALUES(?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Bezeichnung);
+            pstmt.executeUpdate();
+
+            System.out.println("Arbeitsbereich erfolgreich hinzugefügt: " + Bezeichnung);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen des Arbeitsbereiches: " + e.getMessage());
+        }
+    }
+
+    public void deleteArbeitsbereichByID(int id) {
+        String sql = "DELETE FROM Arbeitsbereich WHERE ArbeitsbereichID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Der Arbeitsbereich mit ID " + id + " wurde geloescht.");
+            } else {
+                System.out.println("Kein Arbeitsbereich mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Loeschen: " + e.getMessage());
+        }
+    }
+
+    public void updateArbeitsbereichByID(int id, String Bezeichnung) {
+        String sql = "UPDATE Arbeitsbereich SET Bezeichnung = ? WHERE AirlineID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Bezeichnung);
+            pstmt.setInt(4, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Arbeitsbereich mit ID " + id + " wurde erfolgreich aktualisiert.");
+            } else {
+                System.out.println("Kein Arbeitsbereich mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+        }
+    }
+
+    public void Flugzeuge() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int FlugzeugeID = 0;
+        String Art = null;
+        String Modell = null;
+        try {
+            System.out.println("Aktuelle Flugzeuge der Datenbank:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Flugzeuge"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                FlugzeugeID = result.getInt("FlugzeugeID"); //Benennung aus der Datenbank "userid"
+                Modell = result.getString("Modell");
+                Art = result.getString("Art");
+                //Ausgabe
+                System.out.println(FlugzeugeID + " " + Art + " " + Modell);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: Flugzeuge: " + FlugzeugeID + ", Art: " + Art
+                    + ", Modell:" + Modell);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addFlugzeuge(String Art, String Modell) {
+        String sql = "INSERT INTO Flugzeuge(Art, Modell) VALUES(?, ?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Art);
+            pstmt.setString(2, Modell);
+            pstmt.executeUpdate();
+
+            System.out.println("Flugzeug erfolgreich hinzugefügt: " + Art + Modell);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen des Flugzeuges: " + e.getMessage());
+        }
+    }
+
+    public void deleteFlugzeugeByID(int id) {
+        String sql = "DELETE FROM Flugzeuge WHERE FlugzeugID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Flugzeug mit ID " + id + " wurde geloescht.");
+            } else {
+                System.out.println("Kein Flugzeug mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Loeschen: " + e.getMessage());
+        }
+    }
+
+    public void updateFlugzeugeByID(int id, String Art, String Modell) {
+        String sql = "UPDATE Flugzeuge SET Art = ?, Modell = ? WHERE AirlineID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Art);
+            pstmt.setString(2, Modell);
+            pstmt.setInt(4, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Flugzeug mit ID " + id + " wurde erfolgreich aktualisiert.");
+            } else {
+                System.out.println("Kein Flugzeug mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+        }
+    }
+
+    public void Landebahn() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int LandebahnID = 0;
+        String LBezeichnung = null;
+        int Standort_F = 0;
+        try {
+            System.out.println("Aktuelle Nutzer der Datenbank:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Landebahn"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                LandebahnID = result.getInt("LandebahnID"); //Benennung aus der Datenbank "userid"
+                LBezeichnung = result.getString("LBezeichnung");
+                Standort_F = result.getInt("Standort_F");//muss für alle Spalten der Tabelle durchgeführt werden
+                //Ausgabe
+                System.out.println(LandebahnID + " " + LBezeichnung + " " + Standort_F);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: AirlineID: " + LandebahnID + ", Name: " + LBezeichnung
+                    + ", Flguzeuge_F: " + Standort_F);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addLandebahn(String LBezeichnung, int Standort_F) {
+        String sql = "INSERT INTO Landebahn(LBezeichung, Standort_F) VALUES(?, ?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, LBezeichnung);
+            pstmt.setInt(2, Standort_F);
+            pstmt.executeUpdate();
+
+            System.out.println("Landebahn erfolgreich hinzugefügt: " + LBezeichnung);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen der Landebahn: " + e.getMessage());
+        }
+    }
+
+    public void deleteLandebahnByID(int id) {
+        String sql = "DELETE FROM Landebahn WHERE LandebahnID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Landebahn mit ID " + id + " wurde geloescht.");
+            } else {
+                System.out.println("Keine Landebahn mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Loeschen: " + e.getMessage());
+        }
+    }
+
+    public void updateLandebahnByID(int id, String Bezeichnung, int Standort_F) {
+        String sql = "UPDATE Landebahn SET Bezeichnung = ?, Standort_F = ? WHERE LandebahnID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, Bezeichnung);
+            pstmt.setInt(2, Standort_F);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Landebahn mit ID " + id + " wurde erfolgreich aktualisiert.");
+            } else {
+                System.out.println("Keine Landebahn mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+        }
+    }
+
+    public void Personal() {
+        //lokale Variablen am Anfang der Methode, weil außerhalb des try, catch notwendig
+        Statement stmt = null;
+        ResultSet result = null;
+        int PersonalID = 0;
+        String Name = null;
+        String Nachname = null;
+        int Standort_F = 0;
+        int Arbeitsbereich_F = 0;
+        try {
+            System.out.println("Aktuelle Nutzer der Datenbank:");
+            connection = DriverManager.getConnection(url);
+            stmt = connection.createStatement(); //CreateStatement ist eine importierte Methode (gern in JAVA-Doc nachlesen)
+            String sql = "SELECT * FROM Landebahn"; //SQL-Statement, in dem Beispiel: Selektieren aller Users
+            result = stmt.executeQuery(sql);//Ergebnis in Variable result schreiben
+            //Anzeigen der Ergebnisse
+            while (result.next()) {
+                PersonalID = result.getInt("PersonalID"); //Benennung aus der Datenbank "userid"
+                Name = result.getString("Name");
+                Nachname = result.getString("Nachname");
+                Standort_F = result.getInt("Standort_F");//muss für alle Spalten der Tabelle durchgeführt werden
+                Arbeitsbereich_F = result.getInt("Arbeitsbereich_F");
+                System.out.println(PersonalID + " " + Name + " " + Nachname + " " + Standort_F + " " + Arbeitsbereich_F);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Fehler bei der Abfrage: ID: " + PersonalID + ", Name: " + Name
+                    + ", Nachname: " + Nachname + ", Standort_F: " + Standort_F + ", Arbeitsbereich_F: " + Arbeitsbereich_F);
+        } finally {
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addPersonal(int Arbeitsbereich_F, String Name, String Nachname, int Standort_F) {
+        String sql = "INSERT INTO Personal(Arbeitsbereich_F, Name, Nachname, Standort_F) VALUES(?, ?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, Arbeitsbereich_F);
+            pstmt.setString(2, Name);
+            pstmt.setString(3, Nachname);
+            pstmt.setInt(4, Standort_F);
+            pstmt.executeUpdate();
+
+            System.out.println("Flugzeug erfolgreich hinzugefügt: " + Arbeitsbereich_F + Name + Nachname + Standort_F);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Hinzufügen des Flugzeuges: " + e.getMessage());
+        }
+    }
+
+    public void updatePersonalByID(int id, int Arbeitsbereich_F, String Name, String Nachname, int Standort_F) {
+        String sql = "UPDATE Personal SET Arbeitsbereich_F = ?, Name = ?, Nachname = ?, Standort_F = ? WHERE PersonalID = ?";
+
+        try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, Arbeitsbereich_F);
+            pstmt.setString(2, Name);
+            pstmt.setString(3, Nachname);
+            pstmt.setInt(4, Standort_F);
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Arbeiter mit ID " + id + " wurde erfolgreich aktualisiert.");
+            } else {
+                System.out.println("Kein Flugzeug mit ID " + id + " gefunden.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Aktualisieren: " + e.getMessage());
+        }
+    }
+}
