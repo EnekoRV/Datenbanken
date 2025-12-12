@@ -1,0 +1,380 @@
+package datenbank_flughafen;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Datenbank_Flughafen DBF = new Datenbank_Flughafen();
+        Scanner s = new Scanner(System.in);
+        DBF.connectToDB();
+        while (true) {
+            System.out.println("Schreiben Sie eine Zahl (1-10) Tippen Sie die 1 wenn sie sehen moechten welche Moeglichkeiten es gibt.");
+            int select = s.nextInt();
+
+            switch (select) {
+                case 1:
+                    System.out.println(" 1 = Uebersicht \n 2 = Verbinden der Datenbank \n 3 = Airlines \n 4 = Arbeitsbereiche \n 5 = Flugzeuge \n 6 = Landebahn \n 7 = Personal");
+                    break;
+                case 2:
+                    DBF.connectToDB();
+                    break;
+                case 3:
+                    DBF.Airlines();
+                    s.nextLine(); // Scanner-Puffer leeren nach nextInt oben im Menü
+
+                    // ------------------ Airline hinzufügen ------------------
+                    String YesNo = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Airline hinzufuegen? (Y/N)");
+                        YesNo = s.nextLine();
+
+                        if (YesNo.equalsIgnoreCase("Y") || YesNo.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie den Namen der Airline an: ");
+                        String Name = s.nextLine();
+
+                        int AnzahlFlugzeuge;
+
+                        while (true) {
+                            System.out.print("Geben sie ein wie viele Flugzeuge die Airline haben soll: ");
+
+                            if (s.hasNextInt()) {
+                                AnzahlFlugzeuge = s.nextInt();
+                                s.nextLine(); // Puffer leeren
+                                break;
+                            } else {
+                                System.out.println("Ungueltige Eingabe! Bitte eine ganze Zahl eingeben.");
+                                s.nextLine(); // ungültige Eingabe löschen
+                            }
+                        }
+
+                        System.out.print("Geben Sie ein welche Art von Flugzeug es haben soll(1-11): ");
+                        int Flugzeuge_F = s.nextInt();
+                        s.nextLine();
+
+                        DBF.addAirline(Name, AnzahlFlugzeuge, Flugzeuge_F);
+                    }
+
+                    // ------------------ Airline löschen ------------------
+                    String YesNo2 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Airline loeschen? (Y/N)");
+                        YesNo2 = s.nextLine();
+
+                        if (YesNo2.equalsIgnoreCase("Y") || YesNo2.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo2.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz möchten Sie loeschen: ");
+                        int Airlinedelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteAirlineByID(Airlinedelete);
+                    }
+                    String YesNo3 = "";
+                    for (;;) {
+                        System.out.print("Wollen sie eine Airline bearbeiten? (Y/N) ");
+                        YesNo3 = s.nextLine();
+
+                        if (YesNo3.equalsIgnoreCase("Y") || YesNo3.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo3.equalsIgnoreCase("Y")) {
+                        System.out.print("Welche Airline-ID moechten Sie bearbeiten: ");
+                        int editID = s.nextInt();
+                        s.nextLine();
+
+                        System.out.print("Neuer Name: ");
+                        String newName = s.nextLine();
+
+                        System.out.print("Neue Anzahl Flugzeuge: ");
+                        String newAnzahl = s.nextLine();
+
+                        System.out.print("Neue Flugzeug-Art (1-11): ");
+                        int newFlugzeugeF = s.nextInt();
+                        s.nextLine();
+
+                        DBF.updateAirlineByID(editID, newName, newAnzahl, newFlugzeugeF);
+                    }
+
+                    break;
+                case 4:
+                    DBF.Arbeitsbereich();
+                    s.nextLine();
+                    
+                    String YesNo4 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie einen Arbeitsbereich hinzufuegen? (Y/N)");
+                        YesNo4 = s.nextLine();
+
+                        if (YesNo4.equalsIgnoreCase("Y") || YesNo4.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+                     if (YesNo4.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie die Bezeichnung des Arbeitsbereiches an: ");
+                        String Bezeichnung = s.nextLine();
+
+                        DBF.addArbeitsbereich(Bezeichnung);
+                    }
+                     String YesNo5 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie einen Arbeitsbereich loeschen? (Y/N)");
+                        YesNo5 = s.nextLine();
+
+                        if (YesNo5.equalsIgnoreCase("Y") || YesNo5.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo5.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz möchten Sie loeschen: ");
+                        int Arbeitsbereichdelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteAirlineByID(Arbeitsbereichdelete);
+                    }
+                    String YesNo6 = "";
+                    for (;;) {
+                        System.out.print("Wollen sie einen Arbeitsbereich bearbeiten? (Y/N) ");
+                        YesNo6 = s.nextLine();
+
+                        if (YesNo6.equalsIgnoreCase("Y") || YesNo6.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo6.equalsIgnoreCase("Y")) {
+                        System.out.print("Welche Airline-ID moechten Sie bearbeiten: ");
+                        int editID = s.nextInt();
+                        s.nextLine();
+
+                        System.out.print("Neue Bezeichnung: ");
+                        String newBezeichnung = s.nextLine();
+
+
+                        DBF.updateArbeitsbereichByID(editID, newBezeichnung);
+                    }
+                    break;
+                case 5:
+                    DBF.Flugzeuge();
+                    s.nextLine();
+                    
+                    String YesNo7 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie ein Flugzeuge hinzufuegen? (Y/N)");
+                        YesNo7 = s.nextLine();
+
+                        if (YesNo7.equalsIgnoreCase("Y") || YesNo7.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+                     if (YesNo7.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie die Art des Flugzeuges an: ");
+                        String Art = s.nextLine();
+                        
+                        System.out.print("Geben Sie das Modell des Flugzeuges an: ");
+                        String Modell = s.nextLine();
+
+                        DBF.addFlugzeuge(Art, Modell);
+                    }
+                      String YesNo8 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Flugzeug loeschen? (Y/N)");
+                        YesNo8 = s.nextLine();
+
+                        if (YesNo8.equalsIgnoreCase("Y") || YesNo8.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo8.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz moechten Sie loeschen: ");
+                        int Flugzeugdelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteFlugzeugeByID(Flugzeugdelete);
+                    }
+                     String YesNo9 = "";
+                    for (;;) {
+                        System.out.print("Wollen sie ein Flugzeug bearbeiten? (Y/N) ");
+                        YesNo9 = s.nextLine();
+
+                        if (YesNo9.equalsIgnoreCase("Y") || YesNo9.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo9.equalsIgnoreCase("Y")) {
+                        System.out.print("Welche Flugzeug-ID moechten Sie bearbeiten: ");
+                        int editID = s.nextInt();
+                        s.nextLine();
+
+                        System.out.print("Neue Art: ");
+                        String newArt = s.nextLine();
+
+                        System.out.print("Neues Modell: ");
+                        String newModell = s.nextLine();
+
+                        DBF.updateFlugzeugeByID(editID, newArt, newModell);
+                    }
+
+                    break;
+                case 6:
+                    DBF.Landebahn();
+                    s.nextLine();
+                    
+                    String YesNo10 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Landebahn hinzufuegen? (Y/N)");
+                        YesNo10 = s.nextLine();
+
+                        if (YesNo10.equalsIgnoreCase("Y") || YesNo10.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+                     if (YesNo10.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie die Bezeichnung der Landebahn an: ");
+                        String LBezeichnung = s.nextLine();
+                        
+                        System.out.print("Geben Sie den Standort an: ");
+                        int Standort_F = s.nextInt();
+
+                        DBF.addLandebahn(LBezeichnung, Standort_F);
+                    }
+                       String YesNo11 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie eine Flugzeug loeschen? (Y/N)");
+                        YesNo11 = s.nextLine();
+
+                        if (YesNo11.equalsIgnoreCase("Y") || YesNo11.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo11.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz moechten Sie loeschen: ");
+                        int Landebahndelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteFlugzeugeByID(Landebahndelete);
+                    }
+                     String YesNo12 = "";
+                    for (;;) {
+                        System.out.print("Wollen sie eine Landebahn bearbeiten? (Y/N) ");
+                        YesNo12 = s.nextLine();
+
+                        if (YesNo12.equalsIgnoreCase("Y") || YesNo12.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo12.equalsIgnoreCase("Y")) {
+                        System.out.print("Welche Airline-ID moechten Sie bearbeiten: ");
+                        int editID = s.nextInt();
+                        s.nextLine();
+
+                        System.out.print("Neue Bezeichnung: ");
+                        String newLBezeichnung = s.nextLine();
+
+                        System.out.print("Neues an welchem Standort soll er sein? (1-5): ");
+                        String newStandort_F = s.nextLine();
+
+                        DBF.updateLandebahnByID(editID, newLBezeichnung, newStandort_F);
+                    }
+
+                    break;
+                case 7:
+                    DBF.Personal();
+                    s.nextLine();
+                    
+                    String YesNo13 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie einen Arbeiter einstellen? (Y/N)");
+                        YesNo13 = s.nextLine();
+
+                        if (YesNo13.equalsIgnoreCase("Y") || YesNo13.equalsIgnoreCase("N")) {
+                            break; // gültig → Schleife beenden
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+                     if (YesNo13.equalsIgnoreCase("Y")) {
+
+                        System.out.print("Geben Sie den Arbeitsbereich (1-10) an: ");
+                        int Arbeitsbereich_F = s.nextInt();
+                        
+                        System.out.print("Geben Sie den Vornamen des Arbeiters an: ");
+                        String Name = s.nextLine();
+                        
+                        System.out.print("Geben Sie den Nachnamen des Arbeiters an: ");
+                        String Nachname = s.nextLine();
+                        
+                        System.out.print("Geben Sie den Standort (1-5) des Arbeiters an: ");
+                        int Standort_F = s.nextInt();
+
+                        DBF.addPersonal(Arbeitsbereich_F, Name, Nachname, Standort_F);
+                    }
+                        String YesNo14 = "";
+                    for (;;) {
+                        System.out.println("Wollen sie einen Arbeiter loeschen? (Y/N)");
+                        YesNo14 = s.nextLine();
+
+                        if (YesNo14.equalsIgnoreCase("Y") || YesNo14.equalsIgnoreCase("N")) {
+                            break;
+                        }
+
+                        System.out.println("Ungueltige Eingabe! Bitte nur Y oder N.");
+                    }
+
+                    if (YesNo14.equalsIgnoreCase("Y")) {
+                        System.out.print("Welchen Datensatz moechten Sie loeschen: ");
+                        int Landebahndelete = s.nextInt();
+                        s.nextLine();
+
+                        DBF.deleteFlugzeugeByID(Landebahndelete);
+                    }
+
+                default:
+                    System.out.println("Ungueltige Ausgabe");
+            }
+        }
+    }
+}
