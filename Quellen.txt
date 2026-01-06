@@ -1,0 +1,3 @@
+https://falconbyte.net/javafx-tutorial-und-einstieg
+https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/table-view.htm
+https://www.w3schools.com/sql/
