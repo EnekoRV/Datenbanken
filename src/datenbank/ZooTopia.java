@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package zooTopia;
+package datenbank;
 
 import java.util.Scanner;
 
-public class ZooTopia extends Main {
+public class Datenbank extends Main {
 
     Scanner s = new Scanner(System.in);
     public int AnzahlKinder;
@@ -16,9 +12,10 @@ public class ZooTopia extends Main {
     public int Kinder = 10;
     public int Erwachsene = 15;
     public int ZA;
+    public int Parkscheine; 
+    public int GesamtParkscheine; 
 
-    public void Age() {
-        System.out.println("Herzlich Willkommen im ZooTopia");
+    public void Kostenermittlung() {
         System.out.println("Pro Bereich kostet eine Eintrittskarte fuer kinder/Ermaeßigte 10,- und für Erwachsene 15,-");
         System.out.println("Wie viele ermaeßigte Tickets moechten Sie kaufen?");
         AnzahlKinder = s.nextInt();
@@ -26,9 +23,20 @@ public class ZooTopia extends Main {
         System.out.println("Wie viele Erwachsenen Tickets moechten sie kaufen?");
         AnzahlErwachsene = s.nextInt();
         System.out.println("Sie haben " + AnzahlErwachsene + " erwachsene Tickets gekauft");
-        System.out.println("Wie viele Bereiche moechten Sie besuchen?");
+        System.out.println("Wir besitzen 7 verschiedene Bereiche in unserem Zoo. Jeder Bereich veruegt über den selben Preis!: \n"+
+                                                        "- Eurasien\n" +
+                                                        "- Afrika\n" +
+                                                        "- Nordamerika\n" +
+                                                        "- Suedamerika\n" +
+                                                        "- Australien und Ozeanien\n" +
+                                                        "- tropisches Zentrum\n" +
+                                                        "- Meereswelt\n"+
+                                                        "Wie viele Bereiche moechten Sie besuchen?");
         AnzahlBereiche = s.nextInt();
-        System.out.println("Sie haben eintritt auf" + AnzahlBereiche);
+        System.out.println("Wie viele Parkscheine brauchen sie? Ein Parkschein kostet 5 Euro.");
+        Parkscheine = s.nextInt();
+        GesamtParkscheine = (5 * Parkscheine); 
+        System.out.println("Ihre Parkkosten liegen bei " + GesamtParkscheine + " Euro.");
         System.out.println("Wollen sie Zusaetzliche Angebote kaufen?");
         String Zusatz = s.nextLine();
         System.out.print("JA/NEIN" + Zusatz);
@@ -49,17 +57,17 @@ public class ZooTopia extends Main {
                 String mehr = s.nextLine();
                 if (mehr.equalsIgnoreCase("JA")) {
                 } else {
-                    break;
+                    return;
                 }
             }
             else{
-                break;
+                return;
             }
         }
     }
 
     public void Preise() {
-        Gesamt = (AnzahlKinder * Kinder + AnzahlErwachsene * Erwachsene) * AnzahlBereiche + ZA;
+        Gesamt = (AnzahlKinder * Kinder + AnzahlErwachsene * Erwachsene) * AnzahlBereiche + ZA + GesamtParkscheine;
         System.out.println("Der Preis betraegt " + Gesamt + " Euro");
 
     }
